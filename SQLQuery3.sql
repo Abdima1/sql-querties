@@ -333,6 +333,41 @@ Rollup(S.category_name)
 --ORDER BY
 --    order_date DESC;
 
+		Subquery--- A subquery is a Query that is written depending on other query for
+retrival of data. We can use it with select, update,Insert or Delete
+
+--For instance lets say that we have this two kind of tables
+Sales.orders and Sales.customer
+For instance lets say that we want to know the customers who made order and from New york
+state.
+
+select sc. from sales.customers sc
+
+select so.order_id,so.order_date,so.customer_id from sales.orders so
+where so.customer_id IN( 
+select sc.customer_id 
+from 
+sales.customers sc
+where 
+sc.state = 'New York')
+order by 
+so.order_date desc
+
+SELECT order_id,order_date,customer_id
+FROM
+    sales.orders
+WHERE
+    customer_id IN (
+        SELECT
+            customer_id
+        FROM
+            sales.customers
+        WHERE
+            city = 'New York'
+    )
+ORDER BY
+    order_date DESC;
+
 select so.order_id,so.order_date,so.customer_id 
 from sales.orders so
 where so.customer_id IN(
@@ -837,7 +872,7 @@ select * from EmployeeSalary
 --this problems shown below.
 
 --Question 1: Write an SQL query to fetch the EmpId and FullName of all the employees 
---working under the Manager with id – ‘986’.
+--working under the Manager with id Â– Â‘986Â’.
 
 select EmpId,FullName from EmployeeDetails
 where ManagerId=986
@@ -846,7 +881,7 @@ where ManagerId=986
 --the EmployeeSalary table.
 select distinct project from EmployeeSalary
 
---Question 3: Write an SQL query to fetch the count of employees working in project ‘P1’.
+--Question 3: Write an SQL query to fetch the count of employees working in project Â‘P1Â’.
 select count(EmpId)Number_of_Employees_working_on_Projects from EmployeeSalary
 where Project= 'p1'
 
@@ -869,13 +904,13 @@ select EmpId, Salary from EmployeeSalary
 where Salary between  9000 and 15000 
 
 --Question.6. Write an SQL query to fetch those employees who live in Toronto 
---and work under the manager with ManagerId – 321.
+--and work under the manager with ManagerId Â– 321.
 select * from EmployeeDetails
 where City='Toronto'
 and ManagerId=321
 
 --Question.7. Write an SQL query to fetch all the employees who either live in California or 
---work under a manager with ManagerId – 321.
+--work under a manager with ManagerId Â– 321.
 select * from EmployeeDetails
 where City='California' or  ManagerId=321
 
@@ -901,7 +936,7 @@ select Salary + Variable total_salary
 from EmployeeSalary
 
 --Question.10. Write an SQL query to fetch the employees whose name begins with any 
---two characters, followed by a text “hn” 
+--two characters, followed by a text Â“hnÂ” 
 --and ends with any sequence of characters.
 
 select EmpId, FullName from EmployeeDetails
@@ -909,7 +944,7 @@ where FullName like '__hn%'
 
 ----Question.11. Write an SQL query to fetch all the EmpIds which are present in either 
 --of the tables 
-----– ‘EmployeeDetails’ and ‘EmployeeSalary’.
+----Â– Â‘EmployeeDetailsÂ’ and Â‘EmployeeSalaryÂ’.
 
 select EmpId from EmployeeSalary
 union
@@ -921,7 +956,7 @@ on E.EmpId= S.EmpId
 
 
 --Question: 12 Write an SQL query to fetch common records between two tables.
---Ans. SQL Server – Using INTERSECT operator-
+--Ans. SQL Server Â– Using INTERSECT operator-
 select * from EmployeeDetails
 intersect
 select * from  EmployeeSalary
@@ -932,8 +967,8 @@ MINUS
 select * from 
 
 --use dummy_database
---Question.14. Write an SQL query to fetch the EmpIds that are present in both the tables –   
---‘EmployeeDetails’ and ‘EmployeeSalary.
+--Question.14. Write an SQL query to fetch the EmpIds that are present in both the tables Â–   
+--Â‘EmployeeDetailsÂ’ and Â‘EmployeeSalary.
 select * from EmployeeDetails
 where EmpId in ( select EmpId from EmployeeSalary)
 
@@ -945,8 +980,8 @@ select Empid from EmployeeDetails
 where EmpId NOT IN ( select EmpId from EmployeeSalary )
 
 
---Ques.16. Write an SQL query to fetch the employee’s 
---full names and replace the space with ‘-’.
+--Ques.16. Write an SQL query to fetch the employeeÂ’s 
+--full names and replace the space with Â‘-Â’.
 select Replace(FullName,'','-') from EmployeeDetails
 
 
@@ -1005,7 +1040,7 @@ where  EXISTS ( Select * from EmployeeSalary s
 where e.EmpId=s.EmpId)
 
 ----Question28. Write an SQL query to fetch the project-wise count of employees sorted by 
---project’s
+--projectÂ’s
 ----count in 
 ----descending order.
 
@@ -1046,7 +1081,7 @@ where EXISTS (select * from EmployeeDetails d
 where e.empid=d.ManagerId)
 
 --Question.32. Write an SQL query to fetch duplicate records from EmployeeDetails 
---(without considering the primary key – EmpId).
+--(without considering the primary key Â– EmpId).
 SELECT FullName, ManagerId, DateOfJoining, City, count(*) duplicate_count
 FROM EmployeeDetails
 GROUP BY FullName, ManagerId, DateOfJoining, City
